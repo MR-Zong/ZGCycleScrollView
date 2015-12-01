@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "ZGImageRecyclePlayerViewController.h"
 
 @interface ViewController ()
 
@@ -17,11 +18,26 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    
+      
+    NSMutableArray *mImages = [NSMutableArray array];
+    UIImage *img0 = [UIImage imageNamed:@"Clara-1"];
+    UIImage *img1 = [UIImage imageNamed:@"Clara-2"];
+    //    UIImage *img2 = [UIImage imageNamed:@"Clara-3"];
+    UIImage *img3 = [UIImage imageNamed:@"Clara-4"];
+    
+    [mImages addObject:img0];
+    [mImages addObject:img1];
+    //    [mImages addObject:img2];
+    [mImages addObject:img3];
+    
+    
+    ZGImageRecyclePlayerViewController *imageViewController = [ZGImageRecyclePlayerViewController imageRecyclePlayerViewControllerWithImages:mImages.copy Frame:CGRectMake(0, 20, 200, 500)];
+    
+    [self.view addSubview:imageViewController.view];
+    // 特别注意要多这一步
+    [self addChildViewController:imageViewController];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 @end

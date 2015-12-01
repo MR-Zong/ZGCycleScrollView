@@ -1,0 +1,433 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		EF5314D11C0DC7590093D919 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5314D01C0DC7590093D919 /* main.m */; };
+		EF5314D41C0DC7590093D919 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5314D31C0DC7590093D919 /* AppDelegate.m */; };
+		EF5314D71C0DC7590093D919 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5314D61C0DC7590093D919 /* ViewController.m */; };
+		EF5314DA1C0DC7590093D919 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF5314D81C0DC7590093D919 /* Main.storyboard */; };
+		EF5314DC1C0DC7590093D919 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF5314DB1C0DC7590093D919 /* Images.xcassets */; };
+		EF5314DF1C0DC7590093D919 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF5314DD1C0DC7590093D919 /* LaunchScreen.xib */; };
+		EF5314EB1C0DC7590093D919 /* ZgImageRecyclePlayerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5314EA1C0DC7590093D919 /* ZgImageRecyclePlayerTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		EF5314E51C0DC7590093D919 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EF5314C31C0DC7590093D919 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EF5314CA1C0DC7590093D919;
+			remoteInfo = ZgImageRecyclePlayer;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		EF5314CB1C0DC7590093D919 /* ZgImageRecyclePlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZgImageRecyclePlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EF5314CF1C0DC7590093D919 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EF5314D01C0DC7590093D919 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		EF5314D21C0DC7590093D919 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		EF5314D31C0DC7590093D919 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		EF5314D51C0DC7590093D919 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		EF5314D61C0DC7590093D919 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		EF5314D91C0DC7590093D919 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		EF5314DB1C0DC7590093D919 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		EF5314DE1C0DC7590093D919 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		EF5314E41C0DC7590093D919 /* ZgImageRecyclePlayerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZgImageRecyclePlayerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EF5314E91C0DC7590093D919 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EF5314EA1C0DC7590093D919 /* ZgImageRecyclePlayerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZgImageRecyclePlayerTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		EF5314C81C0DC7590093D919 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EF5314E11C0DC7590093D919 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		EF5314C21C0DC7590093D919 = {
+			isa = PBXGroup;
+			children = (
+				EF5314CD1C0DC7590093D919 /* ZgImageRecyclePlayer */,
+				EF5314E71C0DC7590093D919 /* ZgImageRecyclePlayerTests */,
+				EF5314CC1C0DC7590093D919 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		EF5314CC1C0DC7590093D919 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EF5314CB1C0DC7590093D919 /* ZgImageRecyclePlayer.app */,
+				EF5314E41C0DC7590093D919 /* ZgImageRecyclePlayerTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		EF5314CD1C0DC7590093D919 /* ZgImageRecyclePlayer */ = {
+			isa = PBXGroup;
+			children = (
+				EF5314D21C0DC7590093D919 /* AppDelegate.h */,
+				EF5314D31C0DC7590093D919 /* AppDelegate.m */,
+				EF5314D51C0DC7590093D919 /* ViewController.h */,
+				EF5314D61C0DC7590093D919 /* ViewController.m */,
+				EF5314D81C0DC7590093D919 /* Main.storyboard */,
+				EF5314DB1C0DC7590093D919 /* Images.xcassets */,
+				EF5314DD1C0DC7590093D919 /* LaunchScreen.xib */,
+				EF5314CE1C0DC7590093D919 /* Supporting Files */,
+			);
+			path = ZgImageRecyclePlayer;
+			sourceTree = "<group>";
+		};
+		EF5314CE1C0DC7590093D919 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				EF5314CF1C0DC7590093D919 /* Info.plist */,
+				EF5314D01C0DC7590093D919 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		EF5314E71C0DC7590093D919 /* ZgImageRecyclePlayerTests */ = {
+			isa = PBXGroup;
+			children = (
+				EF5314EA1C0DC7590093D919 /* ZgImageRecyclePlayerTests.m */,
+				EF5314E81C0DC7590093D919 /* Supporting Files */,
+			);
+			path = ZgImageRecyclePlayerTests;
+			sourceTree = "<group>";
+		};
+		EF5314E81C0DC7590093D919 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				EF5314E91C0DC7590093D919 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		EF5314CA1C0DC7590093D919 /* ZgImageRecyclePlayer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EF5314EE1C0DC7590093D919 /* Build configuration list for PBXNativeTarget "ZgImageRecyclePlayer" */;
+			buildPhases = (
+				EF5314C71C0DC7590093D919 /* Sources */,
+				EF5314C81C0DC7590093D919 /* Frameworks */,
+				EF5314C91C0DC7590093D919 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ZgImageRecyclePlayer;
+			productName = ZgImageRecyclePlayer;
+			productReference = EF5314CB1C0DC7590093D919 /* ZgImageRecyclePlayer.app */;
+			productType = "com.apple.product-type.application";
+		};
+		EF5314E31C0DC7590093D919 /* ZgImageRecyclePlayerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EF5314F11C0DC7590093D919 /* Build configuration list for PBXNativeTarget "ZgImageRecyclePlayerTests" */;
+			buildPhases = (
+				EF5314E01C0DC7590093D919 /* Sources */,
+				EF5314E11C0DC7590093D919 /* Frameworks */,
+				EF5314E21C0DC7590093D919 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EF5314E61C0DC7590093D919 /* PBXTargetDependency */,
+			);
+			name = ZgImageRecyclePlayerTests;
+			productName = ZgImageRecyclePlayerTests;
+			productReference = EF5314E41C0DC7590093D919 /* ZgImageRecyclePlayerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EF5314C31C0DC7590093D919 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0630;
+				ORGANIZATIONNAME = XuZonggen;
+				TargetAttributes = {
+					EF5314CA1C0DC7590093D919 = {
+						CreatedOnToolsVersion = 6.3.2;
+					};
+					EF5314E31C0DC7590093D919 = {
+						CreatedOnToolsVersion = 6.3.2;
+						TestTargetID = EF5314CA1C0DC7590093D919;
+					};
+				};
+			};
+			buildConfigurationList = EF5314C61C0DC7590093D919 /* Build configuration list for PBXProject "ZgImageRecyclePlayer" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = EF5314C21C0DC7590093D919;
+			productRefGroup = EF5314CC1C0DC7590093D919 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				EF5314CA1C0DC7590093D919 /* ZgImageRecyclePlayer */,
+				EF5314E31C0DC7590093D919 /* ZgImageRecyclePlayerTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		EF5314C91C0DC7590093D919 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EF5314DA1C0DC7590093D919 /* Main.storyboard in Resources */,
+				EF5314DF1C0DC7590093D919 /* LaunchScreen.xib in Resources */,
+				EF5314DC1C0DC7590093D919 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EF5314E21C0DC7590093D919 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		EF5314C71C0DC7590093D919 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EF5314D71C0DC7590093D919 /* ViewController.m in Sources */,
+				EF5314D41C0DC7590093D919 /* AppDelegate.m in Sources */,
+				EF5314D11C0DC7590093D919 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EF5314E01C0DC7590093D919 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EF5314EB1C0DC7590093D919 /* ZgImageRecyclePlayerTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		EF5314E61C0DC7590093D919 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EF5314CA1C0DC7590093D919 /* ZgImageRecyclePlayer */;
+			targetProxy = EF5314E51C0DC7590093D919 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		EF5314D81C0DC7590093D919 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EF5314D91C0DC7590093D919 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		EF5314DD1C0DC7590093D919 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EF5314DE1C0DC7590093D919 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		EF5314EC1C0DC7590093D919 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		EF5314ED1C0DC7590093D919 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		EF5314EF1C0DC7590093D919 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = ZgImageRecyclePlayer/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		EF5314F01C0DC7590093D919 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = ZgImageRecyclePlayer/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		EF5314F21C0DC7590093D919 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = ZgImageRecyclePlayerTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ZgImageRecyclePlayer.app/ZgImageRecyclePlayer";
+			};
+			name = Debug;
+		};
+		EF5314F31C0DC7590093D919 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = ZgImageRecyclePlayerTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ZgImageRecyclePlayer.app/ZgImageRecyclePlayer";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		EF5314C61C0DC7590093D919 /* Build configuration list for PBXProject "ZgImageRecyclePlayer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EF5314EC1C0DC7590093D919 /* Debug */,
+				EF5314ED1C0DC7590093D919 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EF5314EE1C0DC7590093D919 /* Build configuration list for PBXNativeTarget "ZgImageRecyclePlayer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EF5314EF1C0DC7590093D919 /* Debug */,
+				EF5314F01C0DC7590093D919 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		EF5314F11C0DC7590093D919 /* Build configuration list for PBXNativeTarget "ZgImageRecyclePlayerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EF5314F21C0DC7590093D919 /* Debug */,
+				EF5314F31C0DC7590093D919 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = EF5314C31C0DC7590093D919 /* Project object */;
+}

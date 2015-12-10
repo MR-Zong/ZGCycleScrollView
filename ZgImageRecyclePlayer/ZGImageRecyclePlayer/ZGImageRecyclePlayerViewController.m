@@ -36,6 +36,10 @@
 
 @property (nonatomic,assign) BOOL dragFlag;
 
+@property (nonatomic,assign) BOOL leftFlag;
+
+@property (nonatomic,assign) BOOL rightFlag;
+
 @property (nonatomic,assign) BOOL pageFlag;
 
 @property (nonatomic,copy) NSArray *images;
@@ -105,6 +109,10 @@
     
     
     self.stopFlag = YES;
+    
+    self.leftFlag = YES;
+    
+    self.rightFlag = YES;
     
     self.pageFlag = NO;
     
@@ -179,23 +187,58 @@
 {
     if ([change[@"new"] CGPointValue].x  == [change[@"old"] CGPointValue].x) return;
    
-     if ((self.sv.frame.size.width + 5) > self.sv.contentOffset.x  && (self.sv.frame.size.width -5) < self.sv.contentOffset.x  && self.dragFlag)
+     //if ( self.dragFlag && (self.sv.frame.size.width + 5) > self.sv.contentOffset.x  && (self.sv.frame.size.width -5) < self.sv.contentOffset.x  )
+    if ( self.dragFlag )
     {
-        
-        if (self.tmpImageView) {
+        //NSLog(@"sv.contentOffset.x == %f",self.sv.contentOffset.x);
+
+        if ( self.leftFlag && self.sv.contentOffset.x < self.sv.frame.size.width ) {
             self.stopFlag = YES;
-            
-            [self.imageViewSet addObject:self.tmpImageView];
-            [self.tmpImageView removeFromSuperview];
-            self.tmpImageView = nil;
-            //        NSLog(@"contentOffset %@",NSStringFromCGPoint(self.sv.contentOffset));
-            // 一定要加 因为系统的scrollView pageEnable 会把contentOffset 修改错，要把它调回来
-            //[self.sv setContentOffset:CGPointMake(self.sv.frame.size.width, 0)];
+            self.leftFlag = NO;
+            self.rightFlag = YES;
             
             
+            if (self.tmpImageView) {
+                self.stopFlag = YES;
+                
+                [self.imageViewSet addObject:self.tmpImageView];
+                [self.tmpImageView removeFromSuperview];
+                self.tmpImageView = nil;
+                //        NSLog(@"contentOffset %@",NSStringFromCGPoint(self.sv.contentOffset));
+                // 一定要加 因为系统的scrollView pageEnable 会把contentOffset 修改错，要把它调回来
+                //[self.sv setContentOffset:CGPointMake(self.sv.frame.size.width, 0)];
+                
+                
+            }
+            NSLog(@"**********************************");
+
         }
-        NSLog(@"**********************************");
-        NSLog(@"sv.contentOffset.x == %f",self.sv.contentOffset.x);
+        
+        
+        if ( self.rightFlag && self.sv.contentOffset.x > self.sv.frame.size.width ) {
+            self.stopFlag = YES;
+            self.rightFlag = NO;
+            self.leftFlag = YES;
+            
+            
+            if (self.tmpImageView) {
+                self.stopFlag = YES;
+                
+                [self.imageViewSet addObject:self.tmpImageView];
+                [self.tmpImageView removeFromSuperview];
+                self.tmpImageView = nil;
+                //        NSLog(@"contentOffset %@",NSStringFromCGPoint(self.sv.contentOffset));
+                // 一定要加 因为系统的scrollView pageEnable 会把contentOffset 修改错，要把它调回来
+                //[self.sv setContentOffset:CGPointMake(self.sv.frame.size.width, 0)];
+                
+                
+            }
+            NSLog(@"**********************************");
+        }
+        
+
+
+        
         
     }
     
@@ -263,7 +306,6 @@
 {
     [self timerStop];
     self.dragFlag = YES;
-    NSLog(@"self.dragFlag %d",self.dragFlag);
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate

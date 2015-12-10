@@ -32,9 +32,9 @@
 
 @property (nonatomic,strong) UIImageView *tmpImageView;
 
-
 @property (nonatomic,assign) BOOL stopFlag;
 
+@property (nonatomic,assign) BOOL dragFlag;
 
 @property (nonatomic,assign) BOOL pageFlag;
 
@@ -178,10 +178,25 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if ([change[@"new"] CGPointValue].x  == [change[@"old"] CGPointValue].x) return;
-    
-    if (self.curImageView.frame.origin.x == self.sv.contentOffset.x )
+   
+     if ((self.sv.frame.size.width + 5) > self.sv.contentOffset.x  && (self.sv.frame.size.width -5) < self.sv.contentOffset.x  && self.dragFlag)
     {
-        self.stopFlag = YES;
+        
+        if (self.tmpImageView) {
+            self.stopFlag = YES;
+            
+            [self.imageViewSet addObject:self.tmpImageView];
+            [self.tmpImageView removeFromSuperview];
+            self.tmpImageView = nil;
+            //        NSLog(@"contentOffset %@",NSStringFromCGPoint(self.sv.contentOffset));
+            // 一定要加 因为系统的scrollView pageEnable 会把contentOffset 修改错，要把它调回来
+            //[self.sv setContentOffset:CGPointMake(self.sv.frame.size.width, 0)];
+            
+            
+        }
+        NSLog(@"**********************************");
+        NSLog(@"sv.contentOffset.x == %f",self.sv.contentOffset.x);
+        
     }
     
     if (self.stopFlag) {
@@ -247,6 +262,8 @@
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
     [self timerStop];
+    self.dragFlag = YES;
+    NSLog(@"self.dragFlag %d",self.dragFlag);
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
@@ -257,7 +274,7 @@
     }else{
         self.pageFlag = YES;
     }
-    
+    self.dragFlag = NO;
     NSLog(@"scrollViewDidEndDragging");
 }
 

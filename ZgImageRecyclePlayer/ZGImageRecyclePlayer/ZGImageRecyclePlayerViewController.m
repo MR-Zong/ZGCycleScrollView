@@ -72,6 +72,7 @@
     sv.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     //    sv.backgroundColor = [UIColor redColor];
     sv.pagingEnabled = YES;
+    sv.bounces = NO;
     sv.contentOffset = CGPointMake(sv.frame.size.width, 0);
     sv.showsHorizontalScrollIndicator = NO;
     sv.delegate = self;
@@ -176,9 +177,12 @@
 #pragma mark - sv.contentOffset KVO
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if ([change[@"new"] CGPointValue].x  == [change[@"old"] CGPointValue].x)
-        return;
+    if ([change[@"new"] CGPointValue].x  == [change[@"old"] CGPointValue].x) return;
     
+    if (self.curImageView.frame.origin.x == self.sv.contentOffset.x )
+    {
+        self.stopFlag = YES;
+    }
     
     if (self.stopFlag) {
         

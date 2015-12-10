@@ -17,7 +17,9 @@
 #define ZGBACKGROUNDCOLOR ZGGRAYCOLOR(215)
 #define ZGRandomColor ZGCOLOR_32(1.0,arc4random_uniform(255),arc4random_uniform(255),arc4random_uniform(255))
 
-
+// timer up/down
+// 解开注释，启动timer
+//#define TIMERON
 
 @interface ZGImageRecyclePlayerViewController ()<UIScrollViewDelegate>
 
@@ -116,9 +118,11 @@
     
     self.pageFlag = NO;
     
-    self.imageIndex = 1;
+    self.imageIndex = 0;
     
+#ifdef TIMERON
     [self timerStart];
+#endif
     
 }
 
@@ -147,7 +151,9 @@
     }
     self.pageControl.numberOfPages = self.images.count;
     if (self.images.count <= 1) {
+#ifdef TIMERON
         [self timerStop];
+#endif
         self.sv.delegate = nil;
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
@@ -268,7 +274,16 @@
             
             self.stopFlag = NO;
             
+            // 图片顺序
+            NSInteger tmpImageIndex = [self.images indexOfObject:self.curImageView.image];
+            NSLog(@"curImageIndex %zd",tmpImageIndex);
+            if ( ++tmpImageIndex > self.images.count -1) {
+                self.imageIndex = 0;
+            }else {
+                self.imageIndex = tmpImageIndex;
+            }
             imgView.image = self.images[self.imageIndex];
+            
             self.tmpImageView = imgView;
             [self.sv addSubview:imgView];
             // 从缓存池移除
@@ -284,6 +299,14 @@
             
             self.stopFlag = NO;
             
+            // 图片顺序
+            NSInteger tmpImageIndex = [self.images indexOfObject:self.curImageView.image];
+            NSLog(@"curImageIndex %zd",tmpImageIndex);
+            if ( --tmpImageIndex < 0) {
+                self.imageIndex = self.images.count - 1;
+            }else {
+                self.imageIndex = tmpImageIndex;
+            }
             imgView.image = self.images[self.imageIndex];
             self.tmpImageView = imgView;
             [self.sv addSubview:imgView];
@@ -304,7 +327,9 @@
 #pragma mark - <UIScrollViewDelegate>
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
+#ifdef TIMERON
     [self timerStop];
+#endif
     self.dragFlag = YES;
 }
 
@@ -323,7 +348,7 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    
+    NSLog(@"self.pageFlag %zd",self.pageFlag);
     if (self.pageFlag == NO) {
         [self.imageViewSet addObject:self.tmpImageView];
         [self.tmpImageView removeFromSuperview];
@@ -344,17 +369,21 @@
         CGRect tmpRect = self.curImageView.frame;
         tmpRect.origin.x = self.sv.frame.size.width;
         self.curImageView.frame = tmpRect;
-        NSLog(@"self.curImageView.frame %@",NSStringFromCGRect(self.curImageView.frame));
+       // NSLog(@"self.curImageView.frame %@",NSStringFromCGRect(self.curImageView.frame));
         [self.sv setContentOffset:CGPointMake(self.sv.frame.size.width, 0)];
+        
+        // 已经换在左滑，右滑处理了
         // pageFlage == YES 才能加
-        self.imageIndex += 1;
+        // self.imageIndex += 1;
     }
     
     
     
     self.pageControl.currentPage = [self.images indexOfObject:self.curImageView.image];
     self.stopFlag = YES;
+#ifdef TIMERON
     [self timerStart];
+#endif
     
     NSLog(@"scrollViewDidEndDecelerating");
     
@@ -374,7 +403,9 @@
     self.curImageView.frame = tmpRect;
     [self.sv setContentOffset:CGPointMake(self.sv.frame.size.width, 0)];
     
-    self.imageIndex += 1;
+    // 已经换在左滑，右滑处理了
+    //self.imageIndex += 1;
+    
     self.pageControl.currentPage = [self.images indexOfObject:self.curImageView.image];
     self.stopFlag = YES;
     

@@ -19,7 +19,7 @@
 
 // timer up/down
 // 解开注释，启动timer
-#define TIMERON
+//#define TIMERON
 
 @interface ZGImageRecyclePlayerViewController ()<UIScrollViewDelegate>
 
@@ -178,7 +178,7 @@
 
 - (void)setImageIndex:(NSInteger)imageIndex
 {
-    NSLog(@"imageIndex %zd,images.count %zd",imageIndex,self.images.count);
+//    NSLog(@"imageIndex %zd,images.count %zd",imageIndex,self.images.count);
     
     if (self.images.count && imageIndex >= self.images.count) {
         imageIndex = 0;
@@ -216,7 +216,7 @@
                 
                 
             }
-            NSLog(@"**********************************");
+            NSLog(@"************leftFlag**********************");
 
         }
         
@@ -239,15 +239,12 @@
                 
                 
             }
-            NSLog(@"**********************************");
+            NSLog(@"************rightFlag**********************");
         }
         
-
-
-        
-        
-    }
+    } // end if ( self.dragFlag )
     
+
     if (self.stopFlag) {
         
         UIImageView *imgView = [self dequeueImageView];
@@ -265,7 +262,8 @@
             NSLog(@"缓存池没有，要创建一个");
         }
         
-        
+        NSLog(@"BBBBBBBBBBBBBBBBB\n");
+        NSLog(@"new %f,old %f",[change[@"new"] CGPointValue].x,[change[@"old"] CGPointValue].x);
         if ( [change[@"new"] CGPointValue].x  > [change[@"old"] CGPointValue].x) {
             NSLog(@"往左滑    <<");
             
@@ -335,20 +333,21 @@
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
+    self.stopFlag = YES;
+     self.dragFlag = NO;
+}
+
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    // 判断scrollView是否换页
     if(scrollView.contentOffset.x >= self.sv.frame.size.width * 0.5 && scrollView.contentOffset.x <= self.sv.frame.size.width *1.5 )
     {
         self.pageFlag = NO;
     }else{
         self.pageFlag = YES;
     }
-    self.dragFlag = NO;
-    NSLog(@"scrollViewDidEndDragging");
-}
-
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
-    NSLog(@"self.pageFlag %zd",self.pageFlag);
+   
     if (self.pageFlag == NO) {
         [self.imageViewSet addObject:self.tmpImageView];
         [self.tmpImageView removeFromSuperview];
@@ -378,15 +377,11 @@
     }
     
     
-    
     self.pageControl.currentPage = [self.images indexOfObject:self.curImageView.image];
-    self.stopFlag = YES;
+//    self.stopFlag = YES;
 #ifdef TIMERON
     [self timerStart];
 #endif
-    
-    NSLog(@"scrollViewDidEndDecelerating");
-    
     
 }
 
@@ -409,7 +404,6 @@
     self.pageControl.currentPage = [self.images indexOfObject:self.curImageView.image];
     self.stopFlag = YES;
     
-    NSLog(@"scrollViewDidEndScrollingAnimation");
 }
 
 #pragma mark - Timer

@@ -189,8 +189,7 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if ([change[@"new"] CGPointValue].x  == [change[@"old"] CGPointValue].x) return;
-   
-     //if ( self.onDrag && (self.sv.frame.size.width + 5) > self.sv.contentOffset.x  && (self.sv.frame.size.width -5) < self.sv.contentOffset.x  )
+
     if ( self.onDrag )
     {
 //        NSLog(@"sv.contentOffset.x == %f",self.sv.contentOffset.x);

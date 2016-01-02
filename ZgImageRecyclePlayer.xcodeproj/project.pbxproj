@@ -432,6 +432,7 @@
 				EF5314F01C0DC7590093D919 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EF5314F11C0DC7590093D919 /* Build configuration list for PBXNativeTarget "ZgImageRecyclePlayerTests" */ = {
 			isa = XCConfigurationList;
@@ -440,6 +441,7 @@
 				EF5314F31C0DC7590093D919 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -28,7 +28,7 @@
 /** scrollView */
 @property (nonatomic,strong) UIScrollView *sv;
 
-@property (nonatomic,strong) NSMutableSet *imageViewSet;
+@property (nonatomic,strong) NSMutableSet *imageViewsMemoryCache;
 
 @property (nonatomic,strong) UIImageView *curImageView;
 
@@ -36,13 +36,13 @@
 
 @property (nonatomic,assign) BOOL stopFlag;
 
-@property (nonatomic,assign) BOOL dragFlag;
+@property (nonatomic,assign) BOOL onDrag;
 
-@property (nonatomic,assign) BOOL leftFlag;
+@property (nonatomic,assign) BOOL shouldLeftSlip;
 
-@property (nonatomic,assign) BOOL rightFlag;
+@property (nonatomic,assign) BOOL shouldRightSlip;
 
-@property (nonatomic,assign) BOOL pageFlag;
+@property (nonatomic,assign) BOOL pageSuccess;
 
 @property (nonatomic,copy) NSArray *images;
 
@@ -66,17 +66,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     
     
     // 至关重要
     self.view.frame = self.viewFrame;
     
+    /** scrollView */
     UIScrollView *sv = [[UIScrollView alloc] init];
     self.sv = sv;
- 
     sv.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
-    //    sv.backgroundColor = [UIColor redColor];
+    sv.contentInset = UIEdgeInsetsMake(0, 0, 0, -sv.frame.size.width);
     sv.pagingEnabled = YES;
     sv.bounces = NO;
     sv.contentOffset = CGPointMake(sv.frame.size.width, 0);
@@ -84,11 +83,11 @@
     sv.delegate = self;
     [sv addObserver:self forKeyPath:OBJKEY(sv, contentOffset) options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
     
+    
+    /** imageView */
     UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(sv.frame.size.width, 0, sv.frame.size.width, sv.frame.size.height)];
     self.curImageView = imgView;
-    
     imgView.backgroundColor = [UIColor whiteColor];
-    
     [sv addSubview:imgView];
     
     sv.contentSize = CGSizeMake(sv.frame.size.width * (sv.subviews.count + 2), 0);
@@ -109,14 +108,14 @@
     [self.view addSubview:pageControl];
     
     
-    
+    /**参数初始化 */
     self.stopFlag = YES;
     
-    self.leftFlag = YES;
+    self.shouldLeftSlip = YES;
     
-    self.rightFlag = YES;
+    self.shouldRightSlip = YES;
     
-    self.pageFlag = NO;
+    self.pageSuccess = NO;
     
     self.imageIndex = 0;
     
@@ -168,18 +167,16 @@
 
 
 #pragma mark - lazyLoad
-- (NSMutableSet *)imageViewSet
+- (NSMutableSet *)imageViewsMemoryCache
 {
-    if (!_imageViewSet) {
-        _imageViewSet = [NSMutableSet set];
+    if (!_imageViewsMemoryCache) {
+        _imageViewsMemoryCache = [NSMutableSet set];
     }
-    return _imageViewSet;
+    return _imageViewsMemoryCache;
 }
 
 - (void)setImageIndex:(NSInteger)imageIndex
 {
-//    NSLog(@"imageIndex %zd,images.count %zd",imageIndex,self.images.count);
-    
     if (self.images.count && imageIndex >= self.images.count) {
         imageIndex = 0;
     }
@@ -193,21 +190,19 @@
 {
     if ([change[@"new"] CGPointValue].x  == [change[@"old"] CGPointValue].x) return;
    
-     //if ( self.dragFlag && (self.sv.frame.size.width + 5) > self.sv.contentOffset.x  && (self.sv.frame.size.width -5) < self.sv.contentOffset.x  )
-    if ( self.dragFlag )
+     //if ( self.onDrag && (self.sv.frame.size.width + 5) > self.sv.contentOffset.x  && (self.sv.frame.size.width -5) < self.sv.contentOffset.x  )
+    if ( self.onDrag )
     {
-        //NSLog(@"sv.contentOffset.x == %f",self.sv.contentOffset.x);
+//        NSLog(@"sv.contentOffset.x == %f",self.sv.contentOffset.x);
 
-        if ( self.leftFlag && self.sv.contentOffset.x < self.sv.frame.size.width ) {
+        if ( self.shouldRightSlip && self.sv.contentOffset.x < self.sv.frame.size.width ) {
             self.stopFlag = YES;
-            self.leftFlag = NO;
-            self.rightFlag = YES;
-            
+            self.shouldRightSlip = NO;
+            self.shouldLeftSlip = YES;
             
             if (self.tmpImageView) {
-                self.stopFlag = YES;
                 
-                [self.imageViewSet addObject:self.tmpImageView];
+                [self.imageViewsMemoryCache addObject:self.tmpImageView];
                 [self.tmpImageView removeFromSuperview];
                 self.tmpImageView = nil;
                 //        NSLog(@"contentOffset %@",NSStringFromCGPoint(self.sv.contentOffset));
@@ -216,21 +211,20 @@
                 
                 
             }
-            NSLog(@"************leftFlag**********************");
+            NSLog(@"************shouldRightSlip**********************");
 
         }
         
         
-        if ( self.rightFlag && self.sv.contentOffset.x > self.sv.frame.size.width ) {
+        if ( self.shouldLeftSlip && self.sv.contentOffset.x > self.sv.frame.size.width ) {
             self.stopFlag = YES;
-            self.rightFlag = NO;
-            self.leftFlag = YES;
+            self.shouldLeftSlip = NO;
+            self.shouldRightSlip = YES;
             
             
             if (self.tmpImageView) {
-                self.stopFlag = YES;
                 
-                [self.imageViewSet addObject:self.tmpImageView];
+                [self.imageViewsMemoryCache addObject:self.tmpImageView];
                 [self.tmpImageView removeFromSuperview];
                 self.tmpImageView = nil;
                 //        NSLog(@"contentOffset %@",NSStringFromCGPoint(self.sv.contentOffset));
@@ -239,12 +233,12 @@
                 
                 
             }
-            NSLog(@"************rightFlag**********************");
+            NSLog(@"************shouldLeftSlip**********************");
         }
-        
-    } // end if ( self.dragFlag )
     
-
+        
+    } // end if ( self.onDrag )
+    
     if (self.stopFlag) {
         
         UIImageView *imgView = [self dequeueImageView];
@@ -256,14 +250,13 @@
         if(!imgView)
         {
             imgView = [[UIImageView alloc] init];
-            [self.imageViewSet addObject:imgView];
+            [self.imageViewsMemoryCache addObject:imgView];
             
             imgView.backgroundColor = [UIColor blackColor];
             NSLog(@"缓存池没有，要创建一个");
         }
         
-        NSLog(@"BBBBBBBBBBBBBBBBB\n");
-        NSLog(@"new %f,old %f",[change[@"new"] CGPointValue].x,[change[@"old"] CGPointValue].x);
+        
         if ( [change[@"new"] CGPointValue].x  > [change[@"old"] CGPointValue].x) {
             NSLog(@"往左滑    <<");
             
@@ -285,7 +278,7 @@
             self.tmpImageView = imgView;
             [self.sv addSubview:imgView];
             // 从缓存池移除
-            [self.imageViewSet removeObject:self.tmpImageView];
+            [self.imageViewsMemoryCache removeObject:self.tmpImageView];
             
             
         }else if( [change[@"new"] CGPointValue].x  < [change[@"old"] CGPointValue].x){
@@ -308,7 +301,7 @@
             imgView.image = self.images[self.imageIndex];
             self.tmpImageView = imgView;
             [self.sv addSubview:imgView];
-            [self.imageViewSet removeObject:self.tmpImageView];
+            [self.imageViewsMemoryCache removeObject:self.tmpImageView];
             
         }
     }
@@ -319,7 +312,7 @@
 
 - (UIImageView *)dequeueImageView
 {
-    return [self.imageViewSet anyObject];
+    return [self.imageViewsMemoryCache anyObject];
 }
 
 #pragma mark - <UIScrollViewDelegate>
@@ -328,13 +321,12 @@
 #ifdef TIMERON
     [self timerStop];
 #endif
-    self.dragFlag = YES;
+    self.onDrag = YES;
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-    self.stopFlag = YES;
-     self.dragFlag = NO;
+     self.onDrag = NO;
 }
 
 
@@ -343,13 +335,13 @@
     // 判断scrollView是否换页
     if(scrollView.contentOffset.x >= self.sv.frame.size.width * 0.5 && scrollView.contentOffset.x <= self.sv.frame.size.width *1.5 )
     {
-        self.pageFlag = NO;
+        self.pageSuccess = NO;
     }else{
-        self.pageFlag = YES;
+        self.pageSuccess = YES;
     }
    
-    if (self.pageFlag == NO) {
-        [self.imageViewSet addObject:self.tmpImageView];
+    if (self.pageSuccess == NO) {
+        [self.imageViewsMemoryCache addObject:self.tmpImageView];
         [self.tmpImageView removeFromSuperview];
         self.tmpImageView = nil;
         
@@ -360,7 +352,7 @@
         
     }else{
         
-        [self.imageViewSet addObject:self.curImageView];
+        [self.imageViewsMemoryCache addObject:self.curImageView];
         [self.curImageView removeFromSuperview];
         self.curImageView = self.tmpImageView;
         self.tmpImageView = nil;
@@ -371,14 +363,11 @@
        // NSLog(@"self.curImageView.frame %@",NSStringFromCGRect(self.curImageView.frame));
         [self.sv setContentOffset:CGPointMake(self.sv.frame.size.width, 0)];
         
-        // 已经换在左滑，右滑处理了
-        // pageFlage == YES 才能加
-        // self.imageIndex += 1;
     }
     
     
     self.pageControl.currentPage = [self.images indexOfObject:self.curImageView.image];
-//    self.stopFlag = YES;
+    self.stopFlag = YES;
 #ifdef TIMERON
     [self timerStart];
 #endif
@@ -388,7 +377,7 @@
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
 {
     
-    [self.imageViewSet addObject:self.curImageView];
+    [self.imageViewsMemoryCache addObject:self.curImageView];
     [self.curImageView removeFromSuperview];
     self.curImageView = self.tmpImageView;
     self.tmpImageView = nil;
@@ -397,9 +386,6 @@
     tmpRect.origin.x = self.sv.frame.size.width;
     self.curImageView.frame = tmpRect;
     [self.sv setContentOffset:CGPointMake(self.sv.frame.size.width, 0)];
-    
-    // 已经换在左滑，右滑处理了
-    //self.imageIndex += 1;
     
     self.pageControl.currentPage = [self.images indexOfObject:self.curImageView.image];
     self.stopFlag = YES;

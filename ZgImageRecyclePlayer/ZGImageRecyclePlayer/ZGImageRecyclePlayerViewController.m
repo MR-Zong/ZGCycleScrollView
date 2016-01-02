@@ -19,7 +19,7 @@
 
 // timer up/down
 // 解开注释，启动timer
-//#define TIMERON
+#define TIMERON
 
 @interface ZGImageRecyclePlayerViewController ()<UIScrollViewDelegate>
 

@@ -1,12 +1,13 @@
 //
-//  ZGImageRecyclePlayerViewController.m
-//  ZGWuXianLunBoQi
+//  ZGImageRecyclePlayerView.m
+//  ZgImageRecyclePlayer
 //
-//  Created by 徐宗根 on 15/12/1.
-//  Copyright (c) 2015年 XuZonggen. All rights reserved.
+//  Created by 徐宗根 on 16/1/2.
+//  Copyright © 2016年 XuZonggen. All rights reserved.
 //
 
-#import "ZGImageRecyclePlayerViewController.h"
+#import "ZGImageRecyclePlayerView.h"
+
 
 #define OBJKEY(obj,key) ((void)obj.key,@(#key))
 #define ZGPAGECONTROLHEIGHT 20
@@ -16,13 +17,11 @@
 #define ZGGRAYCOLOR(v) ZGCOLOR_24((v),(v),(v))
 #define ZGBACKGROUNDCOLOR ZGGRAYCOLOR(215)
 #define ZGRandomColor ZGCOLOR_32(1.0,arc4random_uniform(255),arc4random_uniform(255),arc4random_uniform(255))
-
 // timer up/down
 // 解开注释，启动timer
 #define TIMERON
 
-@interface ZGImageRecyclePlayerViewController ()<UIScrollViewDelegate>
-
+@interface ZGImageRecyclePlayerView () <UIScrollViewDelegate>
 
 
 /** scrollView */
@@ -46,8 +45,6 @@
 
 @property (nonatomic,copy) NSArray *images;
 
-@property (nonatomic,assign) CGRect viewFrame;
-
 @property (nonatomic,assign) NSInteger imageIndex;
 
 
@@ -57,131 +54,83 @@
 /** timer */
 @property (nonatomic,strong) NSTimer *timer;
 
-
 @end
 
 
 
-@implementation ZGImageRecyclePlayerViewController
+@implementation ZGImageRecyclePlayerView
++ (instancetype)imageRecyclePlayerViewWithImages:(NSArray *)images Frame:(CGRect)frame
+{
+    ZGImageRecyclePlayerView *recycleView = [[ZGImageRecyclePlayerView alloc] initWithFrame:frame];
+    
+    recycleView.images = images;
+    
+    return recycleView;
+}
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    
-    // 至关重要
-    self.view.frame = self.viewFrame;
-    
-    /** scrollView */
-    UIScrollView *sv = [[UIScrollView alloc] init];
-    self.sv = sv;
-    sv.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
-    sv.contentInset = UIEdgeInsetsMake(0, 0, 0, -sv.frame.size.width);
-    sv.pagingEnabled = YES;
-    sv.bounces = NO;
-    sv.contentOffset = CGPointMake(sv.frame.size.width, 0);
-    sv.showsHorizontalScrollIndicator = NO;
-    sv.delegate = self;
-    [sv addObserver:self forKeyPath:OBJKEY(sv, contentOffset) options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
-    
-    
-    /** imageView */
-    UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(sv.frame.size.width, 0, sv.frame.size.width, sv.frame.size.height)];
-    self.curImageView = imgView;
-    imgView.backgroundColor = [UIColor whiteColor];
-    [sv addSubview:imgView];
-    
-    sv.contentSize = CGSizeMake(sv.frame.size.width * (sv.subviews.count + 2), 0);
-    
-    [self.view addSubview:sv];
-    
-    /** pageControl */
-    UIPageControl *pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, sv.frame.size.height - 20, sv.frame.size.width, 20)];
-    self.pageControl = pageControl;
-    
-    pageControl.pageIndicatorTintColor = [UIColor grayColor];
-    pageControl.numberOfPages = 3;
-    
-    /** pageControl 居中*/
-    pageControl.hidesForSinglePage = YES;
-    //        pageControl.contentMode = UIViewContentModeCenter;
-    //        pageControl.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    [self.view addSubview:pageControl];
-    
-    
-    /**参数初始化 */
-    self.stopFlag = YES;
-    
-    self.shouldLeftSlip = YES;
-    
-    self.shouldRightSlip = YES;
-    
-    self.pageSuccess = NO;
-    
-    self.imageIndex = 0;
-    
+
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    if (self = [super initWithFrame:frame]) {
+        
+        /** scrollView */
+        UIScrollView *sv = [[UIScrollView alloc] init];
+        self.sv = sv;
+        sv.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
+        sv.contentInset = UIEdgeInsetsMake(0, 0, 0, -sv.frame.size.width);
+        sv.pagingEnabled = YES;
+        sv.bounces = NO;
+        sv.contentOffset = CGPointMake(sv.frame.size.width, 0);
+        sv.showsHorizontalScrollIndicator = NO;
+        sv.delegate = self;
+        [sv addObserver:self forKeyPath:OBJKEY(sv, contentOffset) options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
+        
+        
+        /** imageView */
+        UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(sv.frame.size.width, 0, sv.frame.size.width, sv.frame.size.height)];
+        self.curImageView = imgView;
+        imgView.backgroundColor = [UIColor whiteColor];
+        [sv addSubview:imgView];
+        
+        sv.contentSize = CGSizeMake(sv.frame.size.width * (sv.subviews.count + 2), 0);
+        
+        [self addSubview:sv];
+        
+        /** pageControl */
+        UIPageControl *pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, sv.frame.size.height - 20, sv.frame.size.width, 20)];
+        self.pageControl = pageControl;
+        
+        pageControl.pageIndicatorTintColor = [UIColor grayColor];
+        pageControl.numberOfPages = 3;
+        pageControl.hidesForSinglePage = YES;
+        [self addSubview:pageControl];
+        
+        
+        /**参数初始化 */
+        self.stopFlag = YES;
+        
+        self.shouldLeftSlip = YES;
+        
+        self.shouldRightSlip = YES;
+        
+        self.pageSuccess = NO;
+        
+        self.imageIndex = 0;
+        
 #ifdef TIMERON
-    [self timerStart];
+        [self timerStart];
 #endif
     
+        
+    }
+    
+    return self;
 }
 
-
-+ (instancetype)imageRecyclePlayerViewControllerWithImages:(NSArray *)images Frame:(CGRect)frame
-{
-    ZGImageRecyclePlayerViewController *recycleViewControler = [[ZGImageRecyclePlayerViewController alloc] init];
-    
-    recycleViewControler.images = images;
-    recycleViewControler.viewFrame = frame;
-    
-    return recycleViewControler;
-}
 
 - (void)dealloc
 {
     [self.sv removeObserver:self forKeyPath:OBJKEY(self.sv, contentOffset)];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    
-    if (self.images.count) {
-        
-        self.curImageView.image = self.images[0];
-    }
-    self.pageControl.numberOfPages = self.images.count;
-    if (self.images.count <= 1) {
-#ifdef TIMERON
-        [self timerStop];
-#endif
-        self.sv.delegate = nil;
-        static dispatch_once_t onceToken;
-        dispatch_once(&onceToken, ^{
-            [self.sv removeObserver:self forKeyPath:OBJKEY(self.sv, contentOffset)];
-        });
-        
-        self.curImageView.frame = CGRectMake(0, 0, self.sv.frame.size.width, self.sv.frame.size.height);
-        self.sv.contentSize = CGSizeMake(self.sv.frame.size.width, 0);
-    }
-    
-}
-
-
-#pragma mark - lazyLoad
-- (NSMutableSet *)imageViewsMemoryCache
-{
-    if (!_imageViewsMemoryCache) {
-        _imageViewsMemoryCache = [NSMutableSet set];
-    }
-    return _imageViewsMemoryCache;
-}
-
-- (void)setImageIndex:(NSInteger)imageIndex
-{
-    if (self.images.count && imageIndex >= self.images.count) {
-        imageIndex = 0;
-    }
-    _imageIndex = imageIndex;
-    
 }
 
 
@@ -189,11 +138,11 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if ([change[@"new"] CGPointValue].x  == [change[@"old"] CGPointValue].x) return;
-
+    
     if ( self.onDrag )
     {
-//        NSLog(@"sv.contentOffset.x == %f",self.sv.contentOffset.x);
-
+        //        NSLog(@"sv.contentOffset.x == %f",self.sv.contentOffset.x);
+        
         if ( self.shouldRightSlip && self.sv.contentOffset.x < self.sv.frame.size.width ) {
             self.stopFlag = YES;
             self.shouldRightSlip = NO;
@@ -211,7 +160,7 @@
                 
             }
             NSLog(@"************shouldRightSlip**********************");
-
+            
         }
         
         
@@ -234,7 +183,7 @@
             }
             NSLog(@"************shouldLeftSlip**********************");
         }
-    
+        
         
     } // end if ( self.onDrag )
     
@@ -325,7 +274,7 @@
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-     self.onDrag = NO;
+    self.onDrag = NO;
 }
 
 
@@ -338,7 +287,7 @@
     }else{
         self.pageSuccess = YES;
     }
-   
+    
     if (self.pageSuccess == NO) {
         [self.imageViewsMemoryCache addObject:self.tmpImageView];
         [self.tmpImageView removeFromSuperview];
@@ -359,7 +308,7 @@
         CGRect tmpRect = self.curImageView.frame;
         tmpRect.origin.x = self.sv.frame.size.width;
         self.curImageView.frame = tmpRect;
-       // NSLog(@"self.curImageView.frame %@",NSStringFromCGRect(self.curImageView.frame));
+        // NSLog(@"self.curImageView.frame %@",NSStringFromCGRect(self.curImageView.frame));
         [self.sv setContentOffset:CGPointMake(self.sv.frame.size.width, 0)];
         
     }
@@ -409,7 +358,47 @@
 }
 
 
+#pragma mark - lazyLoad
+- (NSMutableSet *)imageViewsMemoryCache
+{
+    if (!_imageViewsMemoryCache) {
+        _imageViewsMemoryCache = [NSMutableSet set];
+    }
+    return _imageViewsMemoryCache;
+}
 
+- (void)setImageIndex:(NSInteger)imageIndex
+{
+    if (self.images.count && imageIndex >= self.images.count) {
+        imageIndex = 0;
+    }
+    _imageIndex = imageIndex;
+    
+}
 
+- (void)setImages:(NSArray *)images
+{
+    _images = images;
+    
+    if (_images.count) {
+        
+        self.curImageView.image = _images[0];
+    }
+    self.pageControl.numberOfPages = _images.count;
+    if (_images.count <= 1) {
+#ifdef TIMERON
+        [self timerStop];
+#endif
+        self.sv.delegate = nil;
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            [self.sv removeObserver:self forKeyPath:OBJKEY(self.sv, contentOffset)];
+        });
+        
+        self.curImageView.frame = CGRectMake(0, 0, self.sv.frame.size.width, self.sv.frame.size.height);
+        self.sv.contentSize = CGSizeMake(self.sv.frame.size.width, 0);
+    }
+    
+}
 
 @end

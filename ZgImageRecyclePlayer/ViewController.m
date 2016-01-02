@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-#import "ZGImageRecyclePlayerViewController.h"
+#import "ZGImageRecyclePlayerView.h"
 
 @interface ViewController ()
 
@@ -32,11 +32,9 @@
     [mImages addObject:img3];
     
     
-    ZGImageRecyclePlayerViewController *imageViewController = [ZGImageRecyclePlayerViewController imageRecyclePlayerViewControllerWithImages:mImages.copy Frame:CGRectMake(0, 20, [UIScreen mainScreen].bounds.size.width, 500)];
+    ZGImageRecyclePlayerView *imageRecyclePlayerView = [ZGImageRecyclePlayerView imageRecyclePlayerViewWithImages:mImages.copy Frame:CGRectMake(0, 20, [UIScreen mainScreen].bounds.size.width, 500)];
     
-    [self.view addSubview:imageViewController.view];
-    // 特别注意要多这一步
-    [self addChildViewController:imageViewController];
+    [self.view addSubview:imageRecyclePlayerView];
 }
 
 

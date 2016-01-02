@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EF0FB7E31C37B20B00B76EAC /* ZGImageRecyclePlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF0FB7E21C37B20B00B76EAC /* ZGImageRecyclePlayerView.m */; settings = {ASSET_TAGS = (); }; };
 		EF5314D11C0DC7590093D919 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5314D01C0DC7590093D919 /* main.m */; };
 		EF5314D41C0DC7590093D919 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5314D31C0DC7590093D919 /* AppDelegate.m */; };
 		EF5314D71C0DC7590093D919 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5314D61C0DC7590093D919 /* ViewController.m */; };
@@ -14,7 +15,6 @@
 		EF5314DC1C0DC7590093D919 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF5314DB1C0DC7590093D919 /* Images.xcassets */; };
 		EF5314DF1C0DC7590093D919 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF5314DD1C0DC7590093D919 /* LaunchScreen.xib */; };
 		EF5314EB1C0DC7590093D919 /* ZgImageRecyclePlayerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5314EA1C0DC7590093D919 /* ZgImageRecyclePlayerTests.m */; };
-		EF5314F71C0DC7BB0093D919 /* ZGImageRecyclePlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5314F61C0DC7BB0093D919 /* ZGImageRecyclePlayerViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,6 +28,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EF0FB7E11C37B20B00B76EAC /* ZGImageRecyclePlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGImageRecyclePlayerView.h; sourceTree = "<group>"; };
+		EF0FB7E21C37B20B00B76EAC /* ZGImageRecyclePlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGImageRecyclePlayerView.m; sourceTree = "<group>"; };
 		EF5314CB1C0DC7590093D919 /* ZgImageRecyclePlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZgImageRecyclePlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF5314CF1C0DC7590093D919 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EF5314D01C0DC7590093D919 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -41,8 +43,6 @@
 		EF5314E41C0DC7590093D919 /* ZgImageRecyclePlayerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZgImageRecyclePlayerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF5314E91C0DC7590093D919 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EF5314EA1C0DC7590093D919 /* ZgImageRecyclePlayerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZgImageRecyclePlayerTests.m; sourceTree = "<group>"; };
-		EF5314F51C0DC7BB0093D919 /* ZGImageRecyclePlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGImageRecyclePlayerViewController.h; sourceTree = "<group>"; };
-		EF5314F61C0DC7BB0093D919 /* ZGImageRecyclePlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGImageRecyclePlayerViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,8 +126,8 @@
 		EF5314F41C0DC7BB0093D919 /* ZGImageRecyclePlayer */ = {
 			isa = PBXGroup;
 			children = (
-				EF5314F51C0DC7BB0093D919 /* ZGImageRecyclePlayerViewController.h */,
-				EF5314F61C0DC7BB0093D919 /* ZGImageRecyclePlayerViewController.m */,
+				EF0FB7E11C37B20B00B76EAC /* ZGImageRecyclePlayerView.h */,
+				EF0FB7E21C37B20B00B76EAC /* ZGImageRecyclePlayerView.m */,
 			);
 			path = ZGImageRecyclePlayer;
 			sourceTree = "<group>";
@@ -234,8 +234,8 @@
 			files = (
 				EF5314D71C0DC7590093D919 /* ViewController.m in Sources */,
 				EF5314D41C0DC7590093D919 /* AppDelegate.m in Sources */,
-				EF5314F71C0DC7BB0093D919 /* ZGImageRecyclePlayerViewController.m in Sources */,
 				EF5314D11C0DC7590093D919 /* main.m in Sources */,
+				EF0FB7E31C37B20B00B76EAC /* ZGImageRecyclePlayerView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

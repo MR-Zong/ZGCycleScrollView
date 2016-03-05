@@ -347,6 +347,7 @@
 - (void)timerStop
 {
     [self.timer invalidate];
+    self.timer = nil;
 }
 
 - (void)doTimer

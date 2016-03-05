@@ -15,6 +15,7 @@
 		EF5314DC1C0DC7590093D919 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF5314DB1C0DC7590093D919 /* Images.xcassets */; };
 		EF5314DF1C0DC7590093D919 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF5314DD1C0DC7590093D919 /* LaunchScreen.xib */; };
 		EF5314EB1C0DC7590093D919 /* ZgImageRecyclePlayerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5314EA1C0DC7590093D919 /* ZgImageRecyclePlayerTests.m */; };
+		EFE98C7F1C8A790400AEF8DF /* ZGCycleScrollView.gif in Resources */ = {isa = PBXBuildFile; fileRef = EFE98C7E1C8A790400AEF8DF /* ZGCycleScrollView.gif */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +44,7 @@
 		EF5314E41C0DC7590093D919 /* ZgImageRecyclePlayerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZgImageRecyclePlayerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF5314E91C0DC7590093D919 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EF5314EA1C0DC7590093D919 /* ZgImageRecyclePlayerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZgImageRecyclePlayerTests.m; sourceTree = "<group>"; };
+		EFE98C7E1C8A790400AEF8DF /* ZGCycleScrollView.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = ZGCycleScrollView.gif; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +102,7 @@
 		EF5314CE1C0DC7590093D919 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				EFE98C7E1C8A790400AEF8DF /* ZGCycleScrollView.gif */,
 				EF5314CF1C0DC7590093D919 /* Info.plist */,
 				EF5314D01C0DC7590093D919 /* main.m */,
 			);
@@ -212,6 +215,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EFE98C7F1C8A790400AEF8DF /* ZGCycleScrollView.gif in Resources */,
 				EF5314DA1C0DC7590093D919 /* Main.storyboard in Resources */,
 				EF5314DF1C0DC7590093D919 /* LaunchScreen.xib in Resources */,
 				EF5314DC1C0DC7590093D919 /* Images.xcassets in Resources */,

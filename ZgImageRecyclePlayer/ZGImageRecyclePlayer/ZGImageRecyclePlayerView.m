@@ -9,6 +9,14 @@
 #import "ZGImageRecyclePlayerView.h"
 
 
+//#define Debug
+
+#ifdef Debug
+
+#else
+#define NSLog(...)
+#endif
+
 #define OBJKEY(obj,key) ((void)obj.key,@(#key))
 #define ZGPAGECONTROLHEIGHT 20
 // 颜色
@@ -34,8 +42,6 @@
 @property (nonatomic,strong) UIImageView *tmpImageView;
 
 @property (nonatomic,assign) BOOL stopFlag;
-
-@property (nonatomic,assign) BOOL onDrag;
 
 @property (nonatomic,assign) BOOL shouldLeftSlip;
 
@@ -139,53 +145,49 @@
 {
     if ([change[@"new"] CGPointValue].x  == [change[@"old"] CGPointValue].x) return;
     
-//    if ( self.onDrag )
-//    {
-        //        NSLog(@"sv.contentOffset.x == %f",self.sv.contentOffset.x);
+    if ( self.shouldRightSlip && self.sv.contentOffset.x < self.sv.frame.size.width ) {
+        self.stopFlag = YES;
+        self.shouldRightSlip = NO;
+        self.shouldLeftSlip = YES;
         
-        if ( self.shouldRightSlip && self.sv.contentOffset.x < self.sv.frame.size.width ) {
-            self.stopFlag = YES;
-            self.shouldRightSlip = NO;
-            self.shouldLeftSlip = YES;
+        if (self.tmpImageView) {
             
-            if (self.tmpImageView) {
-                
-                [self.imageViewsMemoryCache addObject:self.tmpImageView];
-                [self.tmpImageView removeFromSuperview];
-                self.tmpImageView = nil;
-                //        NSLog(@"contentOffset %@",NSStringFromCGPoint(self.sv.contentOffset));
-                // 一定要加 因为系统的scrollView pageEnable 会把contentOffset 修改错，要把它调回来
-                //[self.sv setContentOffset:CGPointMake(self.sv.frame.size.width, 0)];
-                
-                
-            }
-            NSLog(@"************shouldRightSlip**********************");
+            [self.imageViewsMemoryCache addObject:self.tmpImageView];
+            [self.tmpImageView removeFromSuperview];
+            self.tmpImageView = nil;
+            //        NSLog(@"contentOffset %@",NSStringFromCGPoint(self.sv.contentOffset));
+            // 一定要加 因为系统的scrollView pageEnable 会把contentOffset 修改错，要把它调回来
+            //[self.sv setContentOffset:CGPointMake(self.sv.frame.size.width, 0)];
+            
             
         }
+        NSLog(@"************shouldRightSlip**********************");
+        
+    }
+    
+    
+    if ( self.shouldLeftSlip && self.sv.contentOffset.x > self.sv.frame.size.width ) {
+        self.stopFlag = YES;
+        self.shouldLeftSlip = NO;
+        self.shouldRightSlip = YES;
         
         
-        if ( self.shouldLeftSlip && self.sv.contentOffset.x > self.sv.frame.size.width ) {
-            self.stopFlag = YES;
-            self.shouldLeftSlip = NO;
-            self.shouldRightSlip = YES;
+        if (self.tmpImageView) {
+            
+            [self.imageViewsMemoryCache addObject:self.tmpImageView];
+            [self.tmpImageView removeFromSuperview];
+            self.tmpImageView = nil;
+            //        NSLog(@"contentOffset %@",NSStringFromCGPoint(self.sv.contentOffset));
+            // 一定要加 因为系统的scrollView pageEnable 会把contentOffset 修改错，要把它调回来
+            //[self.sv setContentOffset:CGPointMake(self.sv.frame.size.width, 0)];
             
             
-            if (self.tmpImageView) {
-                
-                [self.imageViewsMemoryCache addObject:self.tmpImageView];
-                [self.tmpImageView removeFromSuperview];
-                self.tmpImageView = nil;
-                //        NSLog(@"contentOffset %@",NSStringFromCGPoint(self.sv.contentOffset));
-                // 一定要加 因为系统的scrollView pageEnable 会把contentOffset 修改错，要把它调回来
-                //[self.sv setContentOffset:CGPointMake(self.sv.frame.size.width, 0)];
-                
-                
-            }
-            NSLog(@"************shouldLeftSlip**********************");
         }
-        
-        
-//    } // end if ( self.onDrag )
+        NSLog(@"************shouldLeftSlip**********************");
+    }
+
+    
+    
     
     if (self.stopFlag) {
         
@@ -269,12 +271,7 @@
 #ifdef TIMERON
     [self timerStop];
 #endif
-    self.onDrag = YES;
-}
 
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-    self.onDrag = NO;
 }
 
 

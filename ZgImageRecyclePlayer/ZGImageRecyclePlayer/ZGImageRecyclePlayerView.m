@@ -139,8 +139,8 @@
 {
     if ([change[@"new"] CGPointValue].x  == [change[@"old"] CGPointValue].x) return;
     
-    if ( self.onDrag )
-    {
+//    if ( self.onDrag )
+//    {
         //        NSLog(@"sv.contentOffset.x == %f",self.sv.contentOffset.x);
         
         if ( self.shouldRightSlip && self.sv.contentOffset.x < self.sv.frame.size.width ) {
@@ -185,7 +185,7 @@
         }
         
         
-    } // end if ( self.onDrag )
+//    } // end if ( self.onDrag )
     
     if (self.stopFlag) {
         

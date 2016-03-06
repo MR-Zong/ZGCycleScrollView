@@ -9,7 +9,7 @@
 #import "ZGImageRecyclePlayerView.h"
 
 
-//#define Debug
+#define Debug
 
 #ifdef Debug
 
@@ -83,7 +83,6 @@
         UIScrollView *sv = [[UIScrollView alloc] init];
         self.sv = sv;
         sv.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
-        sv.contentInset = UIEdgeInsetsMake(0, 0, 0, -sv.frame.size.width);
         sv.pagingEnabled = YES;
         sv.bounces = NO;
         sv.contentOffset = CGPointMake(sv.frame.size.width, 0);
@@ -97,8 +96,6 @@
         self.curImageView = imgView;
         imgView.backgroundColor = [UIColor whiteColor];
         [sv addSubview:imgView];
-        
-        sv.contentSize = CGSizeMake(sv.frame.size.width * (sv.subviews.count + 2), 0);
         
         [self addSubview:sv];
         
@@ -165,8 +162,7 @@
         
     }
     
-    
-    if ( self.shouldLeftSlip && self.sv.contentOffset.x > self.sv.frame.size.width ) {
+    if ( self.shouldLeftSlip && (self.sv.contentOffset.x > self.sv.frame.size.width) ) {
         self.stopFlag = YES;
         self.shouldLeftSlip = NO;
         self.shouldRightSlip = YES;
@@ -383,6 +379,7 @@
         self.curImageView.image = _images[0];
     }
     self.pageControl.numberOfPages = _images.count;
+    self.sv.contentSize = CGSizeMake(self.sv.frame.size.width * 3, 0);
     if (_images.count <= 1) {
 #ifdef TIMERON
         [self timerStop];

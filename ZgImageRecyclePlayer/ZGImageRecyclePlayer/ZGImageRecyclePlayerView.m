@@ -143,18 +143,15 @@
     if ([change[@"new"] CGPointValue].x  == [change[@"old"] CGPointValue].x) return;
     
     if ( self.shouldRightSlip && self.sv.contentOffset.x < self.sv.frame.size.width ) {
-        self.stopFlag = YES;
         self.shouldRightSlip = NO;
-        self.shouldLeftSlip = YES;
+        self.shouldLeftSlip = !self.shouldRightSlip;
         
+        self.stopFlag = YES;
         if (self.tmpImageView) {
             
             [self.imageViewsMemoryCache addObject:self.tmpImageView];
             [self.tmpImageView removeFromSuperview];
             self.tmpImageView = nil;
-            //        NSLog(@"contentOffset %@",NSStringFromCGPoint(self.sv.contentOffset));
-            // 一定要加 因为系统的scrollView pageEnable 会把contentOffset 修改错，要把它调回来
-            //[self.sv setContentOffset:CGPointMake(self.sv.frame.size.width, 0)];
             
             
         }
@@ -163,20 +160,16 @@
     }
     
     if ( self.shouldLeftSlip && (self.sv.contentOffset.x > self.sv.frame.size.width) ) {
-        self.stopFlag = YES;
         self.shouldLeftSlip = NO;
-        self.shouldRightSlip = YES;
+        self.shouldRightSlip = !self.shouldLeftSlip;
         
         
+        self.stopFlag = YES;
         if (self.tmpImageView) {
             
             [self.imageViewsMemoryCache addObject:self.tmpImageView];
             [self.tmpImageView removeFromSuperview];
             self.tmpImageView = nil;
-            //        NSLog(@"contentOffset %@",NSStringFromCGPoint(self.sv.contentOffset));
-            // 一定要加 因为系统的scrollView pageEnable 会把contentOffset 修改错，要把它调回来
-            //[self.sv setContentOffset:CGPointMake(self.sv.frame.size.width, 0)];
-            
             
         }
         NSLog(@"************shouldLeftSlip**********************");

@@ -29,6 +29,11 @@
 // 解开注释，启动timer
 #define TIMERON
 
+typedef enum : NSInteger {
+    ZGSlipDirectionLeft,
+    ZGSlipDirectionRight
+} ZGSlipDirection;
+
 @interface ZGImageRecyclePlayerView () <UIScrollViewDelegate>
 
 
@@ -142,11 +147,13 @@
 {
     if ([change[@"new"] CGPointValue].x  == [change[@"old"] CGPointValue].x) return;
     
+    
+    
     if ( self.shouldRightSlip && self.sv.contentOffset.x < self.sv.frame.size.width ) {
         self.shouldRightSlip = NO;
-        self.shouldLeftSlip = !self.shouldRightSlip;
+        self.shouldLeftSlip = YES;
         
-        self.stopFlag = YES;
+        
         if (self.tmpImageView) {
             
             [self.imageViewsMemoryCache addObject:self.tmpImageView];
@@ -157,14 +164,15 @@
         }
         NSLog(@"************shouldRightSlip**********************");
         
+        [self refreshImageView:[self imageViewFromMemoryCache] slipDirection:ZGSlipDirectionRight];
+        
     }
     
     if ( self.shouldLeftSlip && (self.sv.contentOffset.x > self.sv.frame.size.width) ) {
         self.shouldLeftSlip = NO;
-        self.shouldRightSlip = !self.shouldLeftSlip;
+        self.shouldRightSlip = YES;
         
         
-        self.stopFlag = YES;
         if (self.tmpImageView) {
             
             [self.imageViewsMemoryCache addObject:self.tmpImageView];
@@ -173,76 +181,20 @@
             
         }
         NSLog(@"************shouldLeftSlip**********************");
+        [self refreshImageView:[self imageViewFromMemoryCache] slipDirection:ZGSlipDirectionLeft];
     }
-
-    
-    
+     
     
     if (self.stopFlag) {
         
-        UIImageView *imgView = [self dequeueImageView];
-        if (imgView) {
-            imgView.backgroundColor = ZGRandomColor;
-            NSLog(@"从缓存池取出的");
-        }
-        
-        if(!imgView)
-        {
-            imgView = [[UIImageView alloc] init];
-            [self.imageViewsMemoryCache addObject:imgView];
-            
-            imgView.backgroundColor = [UIColor blackColor];
-            NSLog(@"缓存池没有，要创建一个");
-        }
-        
-        
-        if ( [change[@"new"] CGPointValue].x  > [change[@"old"] CGPointValue].x) {
-            NSLog(@"往左滑    <<");
-            
-            
-            imgView.frame = CGRectMake(self.curImageView.frame.origin.x + self.sv.frame.size.width, 0, self.sv.frame.size.width, self.sv.frame.size.height);
-            
-            self.stopFlag = NO;
-            
-            // 图片顺序
-            NSInteger tmpImageIndex = [self.images indexOfObject:self.curImageView.image];
-            NSLog(@"curImageIndex %zd",tmpImageIndex);
-            if ( ++tmpImageIndex > self.images.count -1) {
-                self.imageIndex = 0;
-            }else {
-                self.imageIndex = tmpImageIndex;
-            }
-            imgView.image = self.images[self.imageIndex];
-            
-            self.tmpImageView = imgView;
-            [self.sv addSubview:imgView];
-            // 从缓存池移除
-            [self.imageViewsMemoryCache removeObject:self.tmpImageView];
-            
-            
-        }else if( [change[@"new"] CGPointValue].x  < [change[@"old"] CGPointValue].x){
+        if (self.sv.contentOffset.x < self.sv.frame.size.width) {
             NSLog(@"往右滑     >>");
-            
-            
-            
-            imgView.frame = CGRectMake(self.curImageView.frame.origin.x - self.sv.frame.size.width, 0, self.sv.frame.size.width, self.sv.frame.size.height);
-            
-            self.stopFlag = NO;
-            
-            // 图片顺序
-            NSInteger tmpImageIndex = [self.images indexOfObject:self.curImageView.image];
-            NSLog(@"curImageIndex %zd",tmpImageIndex);
-            if ( --tmpImageIndex < 0) {
-                self.imageIndex = self.images.count - 1;
-            }else {
-                self.imageIndex = tmpImageIndex;
-            }
-            imgView.image = self.images[self.imageIndex];
-            self.tmpImageView = imgView;
-            [self.sv addSubview:imgView];
-            [self.imageViewsMemoryCache removeObject:self.tmpImageView];
-            
+            [self refreshImageView:[self imageViewFromMemoryCache] slipDirection:ZGSlipDirectionRight];
+        }else if(self.sv.contentOffset.x > self.sv.frame.size.width){
+            NSLog(@"往左滑    <<");
+            [self refreshImageView:[self imageViewFromMemoryCache] slipDirection:ZGSlipDirectionLeft];
         }
+
     }
     
     
@@ -252,6 +204,59 @@
 - (UIImageView *)dequeueImageView
 {
     return [self.imageViewsMemoryCache anyObject];
+}
+
+#pragma mark - refreshImageView
+- (void)refreshImageView:(UIImageView *)imgView slipDirection:(NSInteger)slipDirection
+{
+    self.stopFlag = NO;
+    NSInteger tmpImageIndex = [self.images indexOfObject:self.curImageView.image];
+    NSLog(@"curImageIndex %zd",tmpImageIndex);
+
+    if (slipDirection == ZGSlipDirectionRight) {
+        
+        imgView.frame = CGRectMake(self.curImageView.frame.origin.x - self.sv.frame.size.width, 0, self.sv.frame.size.width, self.sv.frame.size.height);
+        // 图片顺序
+        if ( --tmpImageIndex < 0) {
+            self.imageIndex = self.images.count - 1;
+        }else {
+            self.imageIndex = tmpImageIndex;
+        }
+        
+    }else {
+        
+        imgView.frame = CGRectMake(self.curImageView.frame.origin.x + self.sv.frame.size.width, 0, self.sv.frame.size.width, self.sv.frame.size.height);
+        if ( ++tmpImageIndex > self.images.count -1) {
+            self.imageIndex = 0;
+        }else {
+            self.imageIndex = tmpImageIndex;
+        }
+        
+    }
+
+    imgView.image = self.images[self.imageIndex];
+    self.tmpImageView = imgView;
+    [self.sv addSubview:imgView];
+    [self.imageViewsMemoryCache removeObject:self.tmpImageView];
+   
+
+}
+
+#pragma mark - getImage
+- (UIImageView *)imageViewFromMemoryCache
+{
+    UIImageView *imgView = [self dequeueImageView];
+    if (imgView) {
+        //            imgView.backgroundColor = ZGRandomColor;
+        NSLog(@"从缓存池取出的");
+    }else {
+        imgView = [[UIImageView alloc] init];
+        [self.imageViewsMemoryCache addObject:imgView];
+        //            imgView.backgroundColor = [UIColor blackColor];
+        NSLog(@"缓存池没有，要创建一个");
+    }
+    
+    return imgView;
 }
 
 #pragma mark - <UIScrollViewDelegate>

@@ -185,17 +185,17 @@ typedef enum : NSInteger {
     }
      
     
-    if (self.stopFlag) {
-        
-        if (self.sv.contentOffset.x < self.sv.frame.size.width) {
-            NSLog(@"往右滑     >>");
-            [self refreshImageView:[self imageViewFromMemoryCache] slipDirection:ZGSlipDirectionRight];
-        }else if(self.sv.contentOffset.x > self.sv.frame.size.width){
-            NSLog(@"往左滑    <<");
-            [self refreshImageView:[self imageViewFromMemoryCache] slipDirection:ZGSlipDirectionLeft];
-        }
-
-    }
+//    if (self.stopFlag) {
+//        
+//        if (self.sv.contentOffset.x < self.sv.frame.size.width) {
+//            NSLog(@"往右滑     >>");
+//            [self refreshImageView:[self imageViewFromMemoryCache] slipDirection:ZGSlipDirectionRight];
+//        }else if(self.sv.contentOffset.x > self.sv.frame.size.width){
+//            NSLog(@"往左滑    <<");
+//            [self refreshImageView:[self imageViewFromMemoryCache] slipDirection:ZGSlipDirectionLeft];
+//        }
+//
+//    }
     
     
 }
@@ -207,7 +207,7 @@ typedef enum : NSInteger {
 }
 
 #pragma mark - refreshImageView
-- (void)refreshImageView:(UIImageView *)imgView slipDirection:(NSInteger)slipDirection
+- (void)refreshImageView:(UIImageView *)tmpImageView slipDirection:(NSInteger)slipDirection
 {
     self.stopFlag = NO;
     NSInteger tmpImageIndex = [self.images indexOfObject:self.curImageView.image];
@@ -215,7 +215,7 @@ typedef enum : NSInteger {
 
     if (slipDirection == ZGSlipDirectionRight) {
         
-        imgView.frame = CGRectMake(self.curImageView.frame.origin.x - self.sv.frame.size.width, 0, self.sv.frame.size.width, self.sv.frame.size.height);
+        tmpImageView.frame = CGRectMake(self.curImageView.frame.origin.x - self.sv.frame.size.width, 0, self.sv.frame.size.width, self.sv.frame.size.height);
         // 图片顺序
         if ( --tmpImageIndex < 0) {
             self.imageIndex = self.images.count - 1;
@@ -225,7 +225,7 @@ typedef enum : NSInteger {
         
     }else {
         
-        imgView.frame = CGRectMake(self.curImageView.frame.origin.x + self.sv.frame.size.width, 0, self.sv.frame.size.width, self.sv.frame.size.height);
+        tmpImageView.frame = CGRectMake(self.curImageView.frame.origin.x + self.sv.frame.size.width, 0, self.sv.frame.size.width, self.sv.frame.size.height);
         if ( ++tmpImageIndex > self.images.count -1) {
             self.imageIndex = 0;
         }else {
@@ -234,15 +234,15 @@ typedef enum : NSInteger {
         
     }
 
-    imgView.image = self.images[self.imageIndex];
-    self.tmpImageView = imgView;
-    [self.sv addSubview:imgView];
+    tmpImageView.image = self.images[self.imageIndex];
+    self.tmpImageView = tmpImageView;
+    [self.sv addSubview:tmpImageView];
     [self.imageViewsMemoryCache removeObject:self.tmpImageView];
    
 
 }
 
-#pragma mark - getImage
+#pragma mark - getImageView
 - (UIImageView *)imageViewFromMemoryCache
 {
     UIImageView *imgView = [self dequeueImageView];
@@ -334,7 +334,7 @@ typedef enum : NSInteger {
 #pragma mark - Timer
 - (void)timerStart
 {
-    self.timer = [NSTimer timerWithTimeInterval:2 target:self selector:@selector(doTimer) userInfo:nil repeats:YES];
+    self.timer = [NSTimer timerWithTimeInterval:8 target:self selector:@selector(doTimer) userInfo:nil repeats:YES];
     [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
 }
 
